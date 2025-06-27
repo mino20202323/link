@@ -34,8 +34,11 @@ export default function SignUpScreen() {
         value={password}
         onChangeText={setPassword}
       />
-      <Button mode="contained" onPress={handleSignUp}>
+      <Button mode="contained" onPress={handleSignUp} style={styles.signUpButton}>
         Sign Up
+      </Button>
+      <Button mode="text" onPress={() => router.back()}>
+        Back
       </Button>
     </View>
   );
@@ -49,5 +52,8 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 12,
+  },
+  signUpButton: {
+    marginBottom: 8,
   },
 });
