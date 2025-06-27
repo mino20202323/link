@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
 import { Button, Card, IconButton, useTheme } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -32,33 +33,36 @@ export default function FeedScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
-      <Button mode="contained" onPress={() => router.push('/create-post')} style={styles.createButton}>
-        Create Post
-      </Button>
-      <FlatList
-        data={posts}
-        keyExtractor={(item) => item.id}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        renderItem={({ item }) => (
-          <Card style={[styles.post, { backgroundColor: theme.colors.elevation.level1 }]}>
-            <Card.Title title={item.author} titleStyle={styles.author} />
-            <Card.Content>
-              <Text>{item.content}</Text>
-            </Card.Content>
-            <Card.Actions>
-              <IconButton icon="heart-outline" onPress={() => {}} />
-              <IconButton icon="chat-outline" onPress={() => {}} />
-            </Card.Actions>
-          </Card>
-        )}
-      />
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ResponsiveContainer style={styles.inner}>
+        <Button mode="contained" onPress={() => router.push('/create-post')} style={styles.createButton}>
+          Create Post
+        </Button>
+        <FlatList
+          data={posts}
+          keyExtractor={(item) => item.id}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          renderItem={({ item }) => (
+            <Card style={[styles.post, { backgroundColor: theme.colors.elevation.level1 }]}>
+              <Card.Title title={item.author} titleStyle={styles.author} />
+              <Card.Content>
+                <Text>{item.content}</Text>
+              </Card.Content>
+              <Card.Actions>
+                <IconButton icon="heart-outline" onPress={() => {}} />
+                <IconButton icon="chat-outline" onPress={() => {}} />
+              </Card.Actions>
+            </Card>
+          )}
+        />
+      </ResponsiveContainer>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
+  inner: { flex: 1 },
   createButton: { marginBottom: 12 },
   post: {
     padding: 12,

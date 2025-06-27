@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
 import { Button, useTheme } from 'react-native-paper';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
@@ -14,15 +15,17 @@ export default function ProfileScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Image
-        source={{ uri: 'https://placekitten.com/200/200' }}
-        style={styles.avatar}
-      />
-      <Text style={styles.name}>Jane Doe</Text>
-      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Software Developer</Text>
-      <Button mode="contained" onPress={handleSignOut}>
-        Sign Out
-      </Button>
+      <ResponsiveContainer style={styles.inner}>
+        <Image
+          source={{ uri: 'https://placekitten.com/200/200' }}
+          style={styles.avatar}
+        />
+        <Text style={styles.name}>Jane Doe</Text>
+        <Text style={[styles.title, { color: theme.colors.onBackground }]}>Software Developer</Text>
+        <Button mode="contained" onPress={handleSignOut}>
+          Sign Out
+        </Button>
+      </ResponsiveContainer>
     </View>
   );
 }
@@ -32,6 +35,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  inner: {
+    alignItems: "center",
   },
   avatar: {
     width: 120,
