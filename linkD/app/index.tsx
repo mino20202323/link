@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 
 export default function LandingScreen() {
   const router = useRouter();
+  const theme = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Text style={styles.title}>Welcome to LinkD</Text>
       <Button mode="contained" onPress={() => router.push('/sign-in')} style={styles.button}>
         Sign In
