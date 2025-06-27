@@ -1,21 +1,51 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
+import { Button, Card } from 'react-native-paper';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import { useRouter } from 'expo-router';
 
-const posts = [
-  { id: "1", author: "Jane Doe", content: "Excited to join this new platform!" },
-  { id: "2", author: "John Smith", content: "Just published a new blog post." },
-];
+interface Post {
+  id: string;
+  author: string;
+  content: string;
+}
 
 export default function FeedScreen() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const router = useRouter();
+
+  async function fetchPosts() {
+    const { data } = await supabase.from('posts').select('*').order('created_at', { ascending: false });
+    setPosts(data as Post[]);
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchPosts();
+    setRefreshing(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Button mode="contained" onPress={() => router.push('/create-post')} style={styles.createButton}>
+        Create Post
+      </Button>
       <FlatList
         data={posts}
         keyExtractor={(item) => item.id}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         renderItem={({ item }) => (
-          <View style={styles.post}>
-            <Text style={styles.author}>{item.author}</Text>
-            <Text>{item.content}</Text>
-          </View>
+          <Card style={styles.post}>
+            <Card.Title title={item.author} titleStyle={styles.author} />
+            <Card.Content>
+              <Text>{item.content}</Text>
+            </Card.Content>
+          </Card>
         )}
       />
     </View>
@@ -24,12 +54,13 @@ export default function FeedScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
+  createButton: { marginBottom: 12 },
   post: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 12,
     marginBottom: 12,
     borderRadius: 6,
     elevation: 1,
   },
-  author: { fontWeight: "bold", marginBottom: 4 },
+  author: { fontWeight: 'bold', marginBottom: 4 },
 });
