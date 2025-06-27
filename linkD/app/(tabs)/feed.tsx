@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
-import { Button, Card } from 'react-native-paper';
+import { Button, Card, IconButton, useTheme } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
@@ -14,6 +14,7 @@ export default function FeedScreen() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
+  const theme = useTheme();
 
   async function fetchPosts() {
     const { data } = await supabase.from('posts').select('*').order('created_at', { ascending: false });
@@ -31,7 +32,7 @@ export default function FeedScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
       <Button mode="contained" onPress={() => router.push('/create-post')} style={styles.createButton}>
         Create Post
       </Button>
@@ -40,11 +41,15 @@ export default function FeedScreen() {
         keyExtractor={(item) => item.id}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         renderItem={({ item }) => (
-          <Card style={styles.post}>
+          <Card style={[styles.post, { backgroundColor: theme.colors.elevation.level1 }]}>
             <Card.Title title={item.author} titleStyle={styles.author} />
             <Card.Content>
               <Text>{item.content}</Text>
             </Card.Content>
+            <Card.Actions>
+              <IconButton icon="heart-outline" onPress={() => {}} />
+              <IconButton icon="chat-outline" onPress={() => {}} />
+            </Card.Actions>
           </Card>
         )}
       />
@@ -56,11 +61,9 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
   createButton: { marginBottom: 12 },
   post: {
-    backgroundColor: '#fff',
     padding: 12,
     marginBottom: 12,
     borderRadius: 6,
-    elevation: 1,
   },
   author: { fontWeight: 'bold', marginBottom: 4 },
 });

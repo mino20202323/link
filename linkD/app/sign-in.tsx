@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Card, useTheme } from 'react-native-paper';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
 
 export default function SignInScreen() {
   const router = useRouter();
+  const theme = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,24 +20,29 @@ export default function SignInScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        label="Email"
-        autoCapitalize="none"
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        label="Password"
-        secureTextEntry
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button mode="contained" onPress={handleSignIn}>
-        Sign In
-      </Button>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+      <Card style={styles.card}>
+        <Card.Title title="Sign In" />
+        <Card.Content>
+          <TextInput
+            label="Email"
+            autoCapitalize="none"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            label="Password"
+            secureTextEntry
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <Button mode="contained" onPress={handleSignIn}>
+            Sign In
+          </Button>
+        </Card.Content>
+      </Card>
     </View>
   );
 }
@@ -45,6 +51,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    padding: 16,
+  },
+  card: {
     padding: 16,
   },
   input: {

@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const theme = useTheme();
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -12,13 +13,13 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Image
         source={{ uri: 'https://placekitten.com/200/200' }}
         style={styles.avatar}
       />
       <Text style={styles.name}>Jane Doe</Text>
-      <Text style={styles.title}>Software Developer</Text>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Software Developer</Text>
       <Button mode="contained" onPress={handleSignOut}>
         Sign Out
       </Button>
@@ -42,7 +43,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  title: {
-    color: "#666",
-  },
+  title: {},
 });

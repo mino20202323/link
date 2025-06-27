@@ -1,6 +1,13 @@
 # LinkD
 
-This repository contains a minimal LinkedIn-style demo built with [Expo](https://expo.dev), a small [Next.js](https://nextjs.org) backend and [Supabase](https://supabase.com) for authentication and data storage. The Expo app uses **React Native Paper** for a dark UI with purple accents and Supabase Auth for signing in and creating accounts, while the Next.js API exposes helper endpoints.
+This repository contains a minimal LinkedIn-style demo built with [Expo](https://expo.dev), a small [Next.js](https://nextjs.org) backend and [Supabase](https://supabase.com) for authentication and data storage. The Expo app uses **React Native Paper** for a dark UI with purple accents and Supabase Auth for signing in and creating accounts, while the Next.js API exposes helper endpoints. UI screens now include themed backgrounds and card-based forms for a cleaner look.
+
+## Features
+- User authentication with Supabase
+- Create posts and browse the feed
+- Profile page with placeholder details
+- New chat tab for future messaging
+- Like and comment buttons on posts (placeholders)
 
 ## Running the app
 

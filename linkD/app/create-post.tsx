@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, useTheme } from 'react-native-paper';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
 
 export default function CreatePostScreen() {
   const [content, setContent] = useState('');
   const router = useRouter();
+  const theme = useTheme();
 
   async function handleCreate() {
     if (!content) return;
@@ -24,7 +25,7 @@ export default function CreatePostScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <TextInput
         label="What's on your mind?"
         value={content}
