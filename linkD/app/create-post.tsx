@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
 import { TextInput, Button, useTheme } from 'react-native-paper';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
@@ -26,16 +27,18 @@ export default function CreatePostScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <TextInput
-        label="What's on your mind?"
-        value={content}
-        onChangeText={setContent}
-        multiline
-        style={styles.input}
-      />
-      <Button mode="contained" onPress={handleCreate}>
-        Post
-      </Button>
+      <ResponsiveContainer>
+        <TextInput
+          label="What's on your mind?"
+          value={content}
+          onChangeText={setContent}
+          multiline
+          style={styles.input}
+        />
+        <Button mode="contained" onPress={handleCreate}>
+          Post
+        </Button>
+      </ResponsiveContainer>
     </View>
   );
 }

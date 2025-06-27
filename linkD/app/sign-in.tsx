@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
 import { TextInput, Button, Card, useTheme } from 'react-native-paper';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
@@ -20,29 +21,31 @@ export default function SignInScreen() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
-      <Card style={styles.card}>
-        <Card.Title title="Sign In" />
-        <Card.Content>
-          <TextInput
-            label="Email"
-            autoCapitalize="none"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-          />
-          <TextInput
-            label="Password"
-            secureTextEntry
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <Button mode="contained" onPress={handleSignIn}>
-            Sign In
-          </Button>
-        </Card.Content>
-      </Card>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ResponsiveContainer>
+        <Card style={styles.card}>
+          <Card.Title title="Sign In" />
+          <Card.Content>
+            <TextInput
+              label="Email"
+              autoCapitalize="none"
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              label="Password"
+              secureTextEntry
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+            />
+            <Button mode="contained" onPress={handleSignIn}>
+              Sign In
+            </Button>
+          </Card.Content>
+        </Card>
+      </ResponsiveContainer>
     </View>
   );
 }
